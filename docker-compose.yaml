@@ -1,0 +1,14 @@
+services:
+  user-service:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    ports:
+      - "8000:3000"
+    environment:
+      - ENV=development
+    networks:
+      - service-network
+
+networks:
+  service-network:
