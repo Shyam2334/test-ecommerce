@@ -19,6 +19,16 @@ services:
       - ENV=development
     networks:
       - service-network
+  order-service:
+    build:
+      context: ./order
+      dockerfile: Dockerfile
+    ports:
+      - "8002:3000"
+    environment:
+      - ENV=development
+    networks:
+      - service-network
 
 networks:
   service-network:
