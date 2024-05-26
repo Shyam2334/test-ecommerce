@@ -9,6 +9,16 @@ services:
       - ENV=development
     networks:
       - service-network
+  product-service:
+    build:
+      context: ./product
+      dockerfile: Dockerfile
+    ports:
+      - "8001:3000"
+    environment:
+      - ENV=development
+    networks:
+      - service-network
 
 networks:
   service-network:
