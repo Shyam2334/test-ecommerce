@@ -5,8 +5,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:3000"
+    depends_on:
+      - user-db
     environment:
       - ENV=development
+      - MONGO_URI=mongodb://user-db:27017/user
     networks:
       - service-network
   product-service:
@@ -27,6 +30,12 @@ services:
       - "8002:3000"
     environment:
       - ENV=development
+    networks:
+      - service-network
+  user-db:
+    image: mongo
+    ports:
+      - "27017:27017"
     networks:
       - service-network
 
