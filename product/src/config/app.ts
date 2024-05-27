@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import router from "../router/product.router";
 
 export const createServer=()=>{
     try{
@@ -7,6 +8,8 @@ export const createServer=()=>{
 
         app.use(express.json());
         app.use(cors());
+
+        app.use(router);
 
         return app
 
