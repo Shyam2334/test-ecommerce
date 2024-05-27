@@ -31,8 +31,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8002:3000"
+    depends_on:
+      - order-db
     environment:
       - ENV=development
+      - MONGO_URI=mongodb://order-db:27017/order
     networks:
       - service-network
   user-db:
@@ -45,6 +48,12 @@ services:
     image: mongo
     ports:
       - "27018:27017"
+    networks:
+      - service-network
+  order-db:
+    image: mongo
+    ports:
+      - "27019:27017"
     networks:
       - service-network
 
