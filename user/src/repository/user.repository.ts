@@ -12,6 +12,10 @@ class UserRepository implements IUserRepository {
     async findByEmail(email: string) {
         return UserModel.findOne({ email });
     }
+
+    async findById(id: string) {
+        return UserModel.findOne({ _id: id }, { password: 0 });
+    }
 }
 
 export default UserRepository;

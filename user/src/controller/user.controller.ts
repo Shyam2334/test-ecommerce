@@ -21,6 +21,15 @@ class UserController {
             res.status(500).json(err);
         }
     }
+
+    async getUserById(req: Request, res: Response) {
+        try {
+            const user = await this.service.getUserById(req.params.id);
+            res.status(user.status).json(user.data);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
 }
 
 export default UserController;

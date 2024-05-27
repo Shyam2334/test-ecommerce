@@ -56,6 +56,20 @@ class UserService {
             }
         }
     }
+
+    async getUserById(id: string) {
+        const user = await this.userRepository.findById(id);
+        if (!user) {
+            return {
+                status: 404,
+                data: "User not found"
+            }
+        }
+        return {
+            status: 200,
+            data: user
+        }
+    }
 }
 
 export default UserService;
