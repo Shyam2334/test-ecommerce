@@ -1,9 +1,17 @@
+import Listener from "../channel/listener";
+import Publisher from "../channel/publisher";
 import CreateProductDto from "../dto/create-product.dto";
 import UpdateProductDto from "../dto/update-product.dto";
 import IProductRepository from "./interface/repository.interface";
 
 class ProductService {
-    constructor(private readonly productRepository: IProductRepository) {}
+    constructor(
+        private readonly productRepository: IProductRepository,
+        private readonly listener: Listener,
+        private readonly publisher: Publisher,
+    ) {
+        this.consumeProductQueue();
+    }
 
     async create(productDto: CreateProductDto) {
         const product = await this.productRepository.findByName(productDto.name)
@@ -33,6 +41,17 @@ class ProductService {
         return {
             status: 200,
             data: updatedProduct
+        }
+    }
+
+    consumeProductQueue() {
+        try {
+            this.listener.listen("order_event", "order_created", async ({ productId }) => {
+                const product = await this.productRepository.findById(productId);
+                this.publisher.publish("product_event", "product_detail", { product })
+            });
+        } catch (err) {
+            console.error(err);
         }
     }
 }
