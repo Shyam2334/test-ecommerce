@@ -1,4 +1,5 @@
 import CreateProductDto from "../dto/create-product.dto";
+import UpdateProductDto from "../dto/update-product.dto";
 import IProductRepository from "./interface/repository.interface";
 
 class ProductService {
@@ -17,6 +18,21 @@ class ProductService {
         return {
             status: 201,
             data: newProduct
+        }
+    }
+
+    async update(id: string, productDto: UpdateProductDto) {
+        const updatedProduct = await this.productRepository.update(id, productDto);
+        if (!updatedProduct) {
+            return {
+                status: 404,
+                data: "Product not found"
+            }
+        }
+        
+        return {
+            status: 200,
+            data: updatedProduct
         }
     }
 }

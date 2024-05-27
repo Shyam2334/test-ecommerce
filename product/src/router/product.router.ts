@@ -11,5 +11,6 @@ const service = new ProductService(repository);
 const controller = new ProductController(service);
 
 router.post("/api/product", adminVerify, (req, res) => controller.create(req, res))
+router.put("/api/product/:id", adminVerify, (req, res) => controller.update(req, res))
 
 export default router;

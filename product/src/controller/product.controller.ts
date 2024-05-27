@@ -12,6 +12,15 @@ class ProductController {
             res.status(500).json(err);
         }
     }
+
+    async update(req: Request, res: Response) {
+        try {
+            const product = await this.productService.update(req.params.id, req.body);
+            res.status(product.status).json(product.data);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
 }
 
 export default ProductController;

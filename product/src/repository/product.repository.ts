@@ -9,8 +9,17 @@ class ProductRepository implements IProductRepository {
         return newProduct;
     }
 
+    async update(id: string, product: Partial<Product>) {
+        const updatedProduct = await ProductModel.findOneAndUpdate({ _id: id }, product, { new: true });
+        return updatedProduct;
+    }
+
     async findByName(name: string) {
         return await ProductModel.findOne({ name });
+    }
+
+    async findById(id: string) {
+        return await ProductModel.findOne({ _id: id });
     }
 }
 
