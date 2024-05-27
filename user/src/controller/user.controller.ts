@@ -12,6 +12,15 @@ class UserController {
             res.status(500).json(err);
         }
     }
+
+    async login(req: Request, res: Response) {
+        try {
+            const user = await this.service.login(req.body);
+            res.status(user.status).json(user.data);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
 }
 
 export default UserController;
